@@ -1,0 +1,104 @@
+# ==========================================
+# .NET / ASP.NET Core / Visual Studio
+# ==========================================
+
+# Build output
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+
+# VS Code
+.vscode/
+
+# ==========================================
+# Logs
+# ==========================================
+
+logs/
+*.log
+*.svclog
+
+# ==========================================
+# OS Files
+# ==========================================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# App configuration & Secrets
+# ==========================================
+
+# Never commit local development settings
+appsettings.Development.json
+appsettings.Local.json
+
+# Secret storage
+secrets.json
+.env
+
+# User secrets folder (extra safety)
+**/secrets/
+
+# ==========================================
+# Database files (if using local db files)
+# ==========================================
+
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# ==========================================
+# Test results
+# ==========================================
+
+TestResults/
+*.trx
+
+# ==========================================
+# NuGet
+# ==========================================
+
+packages/
+*.nupkg
+
+# ==========================================
+# Docker (optional)
+# ==========================================
+
+docker-compose.override.yml
+
+# ==========================================
+# Publish output
+# ==========================================
+
+publish/
+*.Publish.xml
+*.pubxml
+
+# ==========================================
+# Node (if you add frontend later)
+# ==========================================
+
+node_modules/
+dist/
+build/
+
+# ==========================================
+# Temporary files
+# ==========================================
+
+*.tmp
+*.temp
+*.cache

@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Name": "Development Board"
+  },
+  {
+    "Id": 2,
+    "Name": "Marketing Board"
+  },
+  {
+    "Id": 3,
+    "Name": "Personal Tasks"
+  },
+  {
+    "Id": 4,
+    "Name": "Project Alpha"
+  }
+]
