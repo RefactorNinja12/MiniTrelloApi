@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTrello.Dtos;
 using MiniTrello.Models;
@@ -9,6 +10,7 @@ namespace MiniTrello.Controllers
 {
     [ApiController]
     [Route("api/boards/{boardId}/lists")]
+    [Authorize]
     public class BoardListController : ControllerBase
     {
         private readonly IBoardListService _boardListService;

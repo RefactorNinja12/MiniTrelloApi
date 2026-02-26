@@ -1,7 +1,10 @@
-﻿namespace MiniTrello.Dtos
+﻿using MiniTrello.Models;
+
+namespace MiniTrello.Dtos
 {
     public class BoardDto
     {
+       
         public string Name { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MiniTrello.Dtos;
 using MiniTrello.Models;
 using MiniTrello.Services;
@@ -8,6 +9,7 @@ namespace MiniTrello.Controllers
 {
     [ApiController]
     [Route("api/lists/{listId}/cards")]
+    [Authorize]
     public class CardController : ControllerBase
     {
         private readonly ICardService _cardService;
