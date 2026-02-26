@@ -13,9 +13,9 @@ namespace MiniTrello.Services
         {
             _context = context;
         }
-        public async Task<Board> CreateBoard(BoardDto boardDto)
+        public async Task<Board> CreateBoard(BoardDto boardDto, string userId)
         {
-            var board = new Board() { Name = boardDto.Name };
+            var board = new Board() {Name = boardDto.Name, UserId = userId  };
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
             return board;
@@ -33,15 +33,17 @@ namespace MiniTrello.Services
             return false;
         }
 
-        public async Task<Board> GetBoardById(int id)
+        public async Task<Board> GetBoardById(int id, string userId)
         {
-            var board = await _context.Boards.FindAsync(id);
+            var board = await _context.Boards.FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId);
             return board;
         }
 
-        public async Task<List<Board>> GetBoards()
+        public async Task<List<Board>> GetBoards(string userId)
         {
-           return await _context.Boards.ToListAsync();
+            return await _context.Boards
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
         }
 
         public async Task<bool> UpdateBoard(int id, BoardDto boardDto)

@@ -1,17 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTrello.Dtos;
 using MiniTrello.Models;
 using MiniTrello.Services;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MiniTrello.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BoardController : ControllerBase 
     {
         private readonly IBoardService _boardService; 
@@ -26,15 +30,16 @@ namespace MiniTrello.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Board>>> GetBoards()
         {
-
-            return Ok(await _boardService.GetBoards());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(await _boardService.GetBoards(userId));
 
             
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Board>> GetBoardById(int id)
         {
-            var board = await _boardService.GetBoardById(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var board = await _boardService.GetBoardById(id, userId);
             if(board != null)
             {
                 return Ok(board); 
@@ -45,7 +50,13 @@ namespace MiniTrello.Controllers
         [HttpPost]
         public async Task<ActionResult<BoardDto>> CreateBoard(BoardDto boardDto)
         {
-            var board =await _boardService.CreateBoard(boardDto);
+            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(userId == null)
+            {
+                return BadRequest();
+            }
+            var board =await _boardService.CreateBoard(boardDto, userId);
             return CreatedAtAction(nameof(GetBoardById), new {id = board.Id}, board);
         }
         [HttpDelete("{id}")]

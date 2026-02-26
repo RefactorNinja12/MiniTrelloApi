@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiniTrello.Models
 {
-    public class MiniTrelloDbContext : DbContext
+    public class MiniTrelloDbContext : IdentityDbContext<User>
     {
         public MiniTrelloDbContext(DbContextOptions<MiniTrelloDbContext> options) : base(options) { }
 
