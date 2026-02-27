@@ -35,6 +35,7 @@ builder.Services.AddAuthentication(options =>
                     Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<MiniTrelloDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -77,7 +78,34 @@ builder.Services.AddScoped<ICardService, CardService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var context = services.GetRequiredService<MiniTrelloDbContext>();
 
+    // Retry-logik: Försök 5 gånger med 2 sekunders paus
+    for (int i = 0; i < 5; i++)
+    {
+        try
+        {
+            logger.LogInformation("Försöker köra databasmigrationer (försök {Attempt})...", i + 1);
+            context.Database.Migrate();
+            logger.LogInformation("Migrationer klara!");
+            break; // Avbryt loopen om det lyckas
+        }
+        catch (Exception ex)
+        {
+            if (i == 4) // Om sista försöket misslyckas
+            {
+                logger.LogCritical(ex, "Kunde inte ansluta till databasen efter 5 försök.");
+                throw;
+            }
+            logger.LogWarning("Databasen är inte redo än, väntar 2 sekunder...");
+            System.Threading.Thread.Sleep(2000);
+        }
+    }
+}
 
 
 app.UseAuthentication();
