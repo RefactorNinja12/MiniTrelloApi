@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: MiniTrello/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - Jwt__Key=${JWT_KEY}
+      - ConnectionStrings__DefaultConnection=Host=db;Database=minitrellodatabase;Username=postgres;Password=${DB_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: minitrellodatabase
+    ports:
+      - "5433:5432"
