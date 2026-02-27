@@ -15,9 +15,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0F9BADFB-8127-4198-935C-994C8A1BAE2A}"
+<<<<<<< HEAD
+=======
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\docker-build.yml = .github\workflows\docker-build.yml
 	EndProjectSection
+>>>>>>> d8fc6a5408c14d8883707d7ffaf743962bc7bc4a
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
