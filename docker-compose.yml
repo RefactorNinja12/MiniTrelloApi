@@ -2,9 +2,8 @@ version: '3.8'
 
 services:
   api:
-    build:
-      context: .
-      dockerfile: MiniTrello/Dockerfile
+    # Ändra från 'build' till 'image' för att använda din nya GitHub-container
+    image: ghcr.io/refactorninja12/minitrello:latest
     ports:
       - "8080:8080"
     environment:
@@ -17,8 +16,14 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: minitrellodatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=minitrellodatabase
     ports:
       - "5433:5432"
+    # Tips: Lägg till en volume så din data inte försvinner om containern dör
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
